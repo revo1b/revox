@@ -35,10 +35,7 @@ export default async function LoginPage({
             Sign In
           </button>
         </form>
-        <p className="text-xs text-ink-faint mt-4.5">
-          Create your account in the Supabase dashboard (Authentication → Users), or run the
-          setup instructions in the README.
-        </p>
+        
       </div>
     </div>
   );
