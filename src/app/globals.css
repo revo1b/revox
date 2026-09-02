@@ -1,0 +1,184 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --sidebar-w: 248px;
+  --topbar-h: 64px;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  background: theme('colors.bg');
+  color: theme('colors.ink');
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  font-size: 14.5px;
+  line-height: 1.5;
+}
+
+@layer components {
+  /* ---------- App shell ---------- */
+  .app-shell { @apply flex min-h-screen; }
+
+  .sidebar {
+    width: var(--sidebar-w);
+    @apply flex-shrink-0 bg-surface border-r border-border flex flex-col fixed top-0 left-0 bottom-0 z-40 transition-transform duration-200;
+  }
+  .sidebar-closed { @apply -translate-x-full md:translate-x-0; }
+
+  .main { margin-left: var(--sidebar-w); @apply flex-1 min-w-0 flex flex-col; }
+  @media (max-width: 768px) { .main { margin-left: 0; } }
+
+  .nav-item { @apply flex items-center gap-2.5 px-2.5 py-2 rounded-sm text-ink-soft text-[13.5px] font-medium mb-0.5 hover:bg-bg-soft hover:text-ink transition-colors; }
+  .nav-item.active { @apply bg-navy-soft text-navy; }
+  .nav-section-label { @apply text-[10.5px] uppercase tracking-wide text-ink-faint px-2.5 py-1.5 font-bold; }
+
+  .avatar { @apply w-8 h-8 rounded-full bg-navy text-white flex items-center justify-center text-xs font-semibold flex-shrink-0; }
+
+  .topbar {
+    height: var(--topbar-h);
+    @apply border-b border-border bg-bg/85 backdrop-blur flex items-center justify-between px-6 sticky top-0 z-30 gap-4;
+  }
+
+  .search-box { @apply flex-1 max-w-[460px] flex items-center gap-2 bg-surface border border-border rounded-full px-3.5 py-2 text-ink-faint text-[13px]; }
+  .search-box input { @apply border-none outline-none bg-transparent flex-1 text-ink text-[13px]; }
+
+  .ask-revox-btn { @apply flex items-center gap-1.5 bg-navy text-white border-none px-3.5 py-2 rounded-full text-xs font-semibold hover:bg-[#17304f] transition-colors; }
+  .icon-btn { @apply w-9 h-9 flex items-center justify-center rounded-full border border-border bg-surface text-ink-soft hover:bg-bg-soft relative transition-colors; }
+  .badge-dot { @apply absolute top-1.5 right-1.5 w-1.5 h-1.5 rounded-full bg-red border-2 border-surface; }
+
+  .page { @apply px-8 pt-7 pb-16 max-w-[1280px] w-full mx-auto; }
+  @media (max-width: 768px) { .page { @apply px-4 pt-4 pb-24; } }
+
+  .page-title { @apply text-[22px] font-bold; }
+  .page-subtitle { @apply text-ink-soft text-[13.5px] mt-1; }
+  .section-label { @apply text-[11px] uppercase tracking-wide text-ink-faint font-bold mb-3; }
+
+  /* ---------- Buttons ---------- */
+  .btn { @apply inline-flex items-center gap-1.5 px-3.5 py-2 rounded-sm border border-border-strong bg-surface text-ink text-[13px] font-semibold hover:bg-bg-soft transition-colors disabled:opacity-50; }
+  .btn-primary { @apply bg-navy border-navy text-white hover:bg-[#17304f]; }
+  .btn-teal { @apply bg-teal border-teal text-white hover:bg-[#245c58]; }
+  .btn-ghost { @apply bg-transparent border-transparent hover:bg-bg-soft; }
+  .btn-sm { @apply px-2.5 py-1.5 text-xs; }
+  .btn-danger { @apply text-red border-red-soft; }
+
+  /* ---------- Cards ---------- */
+  .card { @apply bg-surface border border-border rounded p-4; }
+  .panel { @apply bg-surface border border-border rounded-lg; }
+
+  .metric-row { @apply grid grid-cols-2 md:grid-cols-5 gap-3 my-6; }
+  .metric { @apply bg-surface border border-border rounded p-4; }
+  .metric .m-label { @apply text-[11.5px] text-ink-faint font-semibold uppercase tracking-wide; }
+  .metric .m-value { @apply text-[21px] font-bold mt-1.5; }
+
+  .grid-2 { @apply grid grid-cols-1 lg:grid-cols-[1.6fr_1fr] gap-5 items-start; }
+  .grid-3 { @apply grid grid-cols-1 md:grid-cols-3 gap-4; }
+
+  .ai-command { @apply bg-gradient-to-br from-navy-soft to-teal-soft border border-border rounded-lg p-6 mb-6; }
+  .ai-command form { @apply flex gap-2.5 mt-3; }
+  .ai-command input[type=text] { @apply flex-1 border border-border-strong bg-surface rounded-full px-4 py-3 text-[14px] outline-none focus:border-navy; }
+  .ai-greeting { @apply text-[19px] font-bold; }
+  .ai-greeting .sub { @apply font-normal text-ink-soft text-[13.5px] mt-1; }
+
+  .priority-card { @apply border border-border rounded p-4 mb-3 bg-surface; }
+  .priority-tag { @apply inline-block text-[10.5px] font-bold uppercase tracking-wide px-2.5 py-0.5 rounded-full mb-2.5; }
+  .priority-tag.high { @apply bg-red-soft text-red; }
+  .priority-tag.medium { @apply bg-amber-soft text-amber; }
+  .priority-tag.low { @apply bg-green-soft text-green; }
+  .priority-title { @apply text-[14.5px] font-bold; }
+  .priority-desc { @apply text-ink-soft text-[13px] mt-1; }
+  .priority-meta { @apply flex gap-4 mt-2.5 text-[12.5px] text-ink-faint; }
+  .priority-meta b { @apply text-ink font-semibold; }
+  .priority-actions { @apply flex gap-2 mt-3; }
+
+  .timeline-item { @apply flex gap-3.5 py-2.5 border-b border-border last:border-b-0; }
+  .timeline-time { @apply w-14 flex-shrink-0 text-xs text-ink-faint pt-px; }
+  .timeline-text { @apply text-[13.5px]; }
+
+  .table-wrap { @apply overflow-x-auto; }
+  table.data-table { @apply w-full border-collapse text-[13.5px]; }
+  .data-table th { @apply text-left text-[11px] uppercase tracking-wide text-ink-faint font-bold px-3.5 py-2.5 border-b border-border whitespace-nowrap; }
+  .data-table td { @apply px-3.5 py-3 border-b border-border align-middle; }
+  .data-table tr:last-child td { @apply border-b-0; }
+  .data-table tr:hover td { @apply bg-surface-hover; }
+
+  .pill { @apply inline-block px-2.5 py-0.5 rounded-full text-[11.5px] font-semibold; }
+  .pill-lead { @apply bg-amber-soft text-amber; }
+  .pill-prospect { @apply bg-navy-soft text-navy; }
+  .pill-customer { @apply bg-green-soft text-green; }
+  .pill-inactive { @apply bg-bg-soft text-ink-faint; }
+  .pill-new, .pill-contacted { @apply bg-bg-soft text-ink-soft; }
+  .pill-qualified { @apply bg-navy-soft text-navy; }
+  .pill-proposal { @apply bg-amber-soft text-amber; }
+  .pill-negotiation { @apply bg-teal-soft text-teal; }
+  .pill-won { @apply bg-green-soft text-green; }
+  .pill-lost { @apply bg-red-soft text-red; }
+
+  .filter-bar { @apply flex gap-2.5 items-center mb-4 flex-wrap; }
+  .tab-row { @apply flex gap-1 mb-4.5 border-b border-border flex-wrap; }
+  .tab-item { @apply px-3.5 py-2 text-[13px] font-semibold text-ink-faint border-b-2 border-transparent -mb-px hover:text-ink; }
+  .tab-item.active { @apply text-navy border-navy; }
+
+  .profile-header { @apply flex items-center justify-between flex-wrap gap-3.5 mb-5; }
+  .profile-id { @apply flex items-center gap-3.5; }
+  .stat-strip { @apply flex gap-6 flex-wrap py-4 border-t border-b border-border mb-5; }
+  .stat-label { @apply text-[11px] uppercase text-ink-faint font-semibold tracking-wide; }
+  .stat-value { @apply text-[17px] font-bold mt-0.5; }
+
+  .ai-summary-box { @apply bg-teal-soft border border-border rounded p-4 text-[13.5px] mb-5; }
+  .ai-summary-box .label { @apply text-[11px] uppercase font-bold text-teal tracking-wide mb-1.5; }
+
+  .nba-box { @apply border border-navy bg-navy-soft rounded p-4 mb-5; }
+  .nba-box .label { @apply text-[11px] uppercase font-bold text-navy tracking-wide mb-2; }
+  .nba-box .nba-text { @apply text-[15px] font-bold mb-2; }
+
+  .email-list-item { @apply block px-4 py-3.5 border-b border-border hover:bg-surface-hover transition-colors; }
+  .email-list-item.unread { @apply bg-navy-soft; }
+  .row1 { @apply flex justify-between text-[13.5px] font-bold; }
+  .row1 .time { @apply font-medium text-ink-faint text-xs; }
+  .subject { @apply text-[13px] font-semibold mt-0.5; }
+  .preview { @apply text-[12.5px] text-ink-faint mt-0.5 whitespace-nowrap overflow-hidden text-ellipsis; }
+
+  .message-bubble { @apply border border-border rounded p-4 mb-3; }
+  .message-bubble.outbound { @apply bg-navy-soft; }
+  .m-head { @apply flex justify-between text-[12.5px] text-ink-faint mb-2; }
+
+  .chat-wrap { @apply max-w-[780px] mx-auto; }
+  .chat-msg { @apply flex gap-3 mb-4.5; }
+  .chat-msg .bubble { @apply bg-surface border border-border rounded p-3.5 text-[13.5px] max-w-[640px] whitespace-pre-wrap; }
+  .chat-msg.user { @apply flex-row-reverse; }
+  .chat-msg.user .bubble { @apply bg-navy text-white border-navy; }
+  .chat-avatar { @apply w-[30px] h-[30px] rounded-full flex-shrink-0 flex items-center justify-center text-[11px] font-bold text-white; }
+  .chat-avatar.ai { @apply bg-gradient-to-br from-navy to-teal; }
+  .chat-avatar.me { @apply bg-ink-faint; }
+
+  .suggestion-grid { @apply grid grid-cols-1 md:grid-cols-2 gap-2.5 mt-4.5; }
+  .suggestion-chip { @apply border border-border bg-surface rounded-sm px-3.5 py-2.5 text-[13px] text-ink-soft hover:border-navy hover:text-navy hover:bg-navy-soft cursor-pointer transition-colors; }
+
+  .empty-state { @apply text-center py-12 px-5 text-ink-faint; }
+  .empty-state .title { @apply text-[14.5px] font-bold text-ink mb-1; }
+
+  .form-field { @apply flex flex-col gap-1.5; }
+  .form-field label { @apply text-xs font-semibold text-ink-soft; }
+  .form-field input, .form-field select, .form-field textarea {
+    @apply border border-border-strong rounded-sm px-3 py-2 text-[13.5px] outline-none bg-surface text-ink focus:border-navy;
+  }
+
+  .modal-backdrop { @apply fixed inset-0 bg-ink/30 hidden items-center justify-center z-[100] p-5; }
+  .modal-backdrop.open { @apply flex; }
+  .modal-box { @apply bg-surface rounded-lg p-5.5 w-full max-w-[520px] max-h-[88vh] overflow-y-auto shadow-2xl; }
+
+  .cal-grid { @apply grid grid-cols-7 gap-px bg-border border border-border rounded overflow-hidden; }
+  .cal-cell { @apply bg-surface min-h-[100px] p-2 text-xs; }
+  .cal-cell.today { @apply bg-navy-soft; }
+  .cal-event { @apply bg-teal-soft text-teal rounded px-1.5 py-0.5 text-[11px] mb-0.5 font-semibold; }
+
+  .mobile-nav { @apply hidden fixed bottom-0 left-0 right-0 bg-surface border-t border-border z-50 px-1 py-1.5 justify-around; }
+  @media (max-width: 768px) { .mobile-nav { @apply flex; } }
+  .mobile-nav a { @apply flex flex-col items-center gap-0.5 text-[10px] text-ink-faint px-2 py-1 rounded-lg font-semibold; }
+  .mobile-nav a.active { @apply text-navy; }
+}
